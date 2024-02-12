@@ -25,10 +25,10 @@ export const initialFriends = [
   },
 ];
 
-
 export default function App() {
   const [friends, setFriends] = useState(initialFriends);
   const [showFriend, setShowFriend] = useState(false);
+  const [selectedFriend, setSelectedFriend] = useState(null);
 
   function handleShowAddFriend() {
     setShowFriend((show) => !show)
@@ -39,14 +39,36 @@ export default function App() {
     setShowFriend(false);
   }
 
+  function handleSelection(friend) {
+    setSelectedFriend((cur) => (cur?.id === friend.id ? null : friend));
+    setShowFriend(false);
+  }
+
+  function handleSplitBill(value) {
+    setFriends(friends =>
+      friends.map(friend => friend.id === selectedFriend.id
+        ?
+        { ...friend, balance: friend.balance + value }
+        : friend))
+
+    setSelectedFriend(null);
+  }
+
   return (
     <div className="app">
       <div className="sidebar">
-        <FriendList friends={friends} />
+        <FriendList
+          friends={friends}
+          onSelection={handleSelection}
+          selectedFriend={selectedFriend}
+        />
         {showFriend && <FromAddFriend onAddFriend={handleAddFriend} />}
         <Button onClick={handleShowAddFriend}>{showFriend ? "Close" : "Add Friend"}</Button >
       </div>
-      <FromSliptBuild />
+      {
+        selectedFriend &&
+        <FromSliptBuild selectedFriend={selectedFriend} onSplitBill={handleSplitBill} />
+      }
     </div>
   )
 }
