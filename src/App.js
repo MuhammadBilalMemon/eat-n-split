@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "./Components/Button";
 import { FriendList } from "./Components/FriendList";
 import { FromAddFriend } from "./Components/FromAddFriend";
@@ -26,12 +27,24 @@ export const initialFriends = [
 
 
 export default function App() {
+  const [friends, setFriends] = useState(initialFriends);
+  const [showFriend, setShowFriend] = useState(false);
+
+  function handleShowAddFriend() {
+    setShowFriend((show) => !show)
+  }
+
+  function handleAddFriend(friend) {
+    setFriends(friends => [...friends, friend]);
+    setShowFriend(false);
+  }
+
   return (
     <div className="app">
       <div className="sidebar">
-        <FriendList />
-        <FromAddFriend />
-        <Button>Add Friend</Button >
+        <FriendList friends={friends} />
+        {showFriend && <FromAddFriend onAddFriend={handleAddFriend} />}
+        <Button onClick={handleShowAddFriend}>{showFriend ? "Close" : "Add Friend"}</Button >
       </div>
       <FromSliptBuild />
     </div>

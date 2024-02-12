@@ -1,10 +1,6 @@
 import { Friend } from "./Friend";
-import { initialFriends } from "../App";
 
-export function FriendList() {
-
-    const friends = initialFriends;
-
+export function FriendList({ friends }) {
     return (
         <ul>
             {friends.map(friend => <Friend friend={friend} key={friend.id} />
