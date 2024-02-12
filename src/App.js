@@ -1,4 +1,7 @@
+import { Button } from "./Components/Button";
 import { FriendList } from "./Components/FriendList";
+import { FromAddFriend } from "./Components/FromAddFriend";
+import { FromSliptBuild } from "./Components/FromSliptBuild";
 
 export const initialFriends = [
   {
@@ -27,7 +30,10 @@ export default function App() {
     <div className="app">
       <div className="sidebar">
         <FriendList />
+        <FromAddFriend />
+        <Button>Add Friend</Button >
       </div>
+      <FromSliptBuild />
     </div>
   )
 }
